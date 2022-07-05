@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    button {
+        position: relative;
+        align-items: center;
+        display: inline-flex;
+        justify-content: center;
+        text-align: center;
+    }
+    div {
+        border: 2px solid black;
+        min-height: 100px;
+    }
+    .body {
+        display: flex;
+        flex-flow: row wrap;
+    }
+    .divs{
+        flex-basis: calc(100% / 4 - 8px);
+        margin: 2px; 
+    }
+    .center {
+        max-width: 50%;
+        margin: auto;
+    }
+    .txtcenter {
+        text-align: center;
+    }
+    .mole {
+        background-color: rgb(183, 142, 221);
+    }
+
+
+</style>
+<header class="center">
+    <button>Start</button>
+    <h1>Your Score:</h1>
+    <h1 id="score">0</h1>
+    <h1>Time left:</h1>
+    <h1 id="time-left">60</h1>
+</header>
+<body>
+    <main class="body center">
+    <div class="divs"></div>
+    <div class="divs"></div>
+    <div class="divs"></div>
+    <div class="divs"></div>
+    <div class="divs"></div>
+    <div class="divs"></div>
+    <div class="divs"></div>
+    <div class="divs"></div>
+
+
+
+    <script>
+
+const square = document.querySelectorAll(".divs")
+ const mole = document.querySelectorAll(".mole")
+ const timeLeft = document.querySelector("#time-left")
+ const score = document.querySelector("#score")
+ 
+ let result = 0
+ let hitPosition
+ let currentTime = 60
+ let timerId = null
+ 
+
+ function randomSquare(){
+    square.forEach(square => {
+        square.classList.remove("mole")
+    })
+
+    let randomSquare = square[Math.floor(Math.random() * 9)]
+    randomSquare.classList.add("mole")
+
+    hitPosition = randomSquare.id
+ }
+ 
+ square.forEach(square => {
+    square.addEventListener("click", () => {
+        if (square.id === hitPosition) {
+            result++
+            score.textContent = result
+            hitPosition = null
+        }
+    })
+ })
+ function moveMole(){
+    timerId = setInterval(randomSquare, 1000)
+ }
+moveMole ()
+
+function countDown (){
+currentTime--
+timeLeft.textContent = currentTime
+
+if (currentTime == 0) {
+    clearInterval(countDownTimerId)
+    clearInterval(timerId)
+    alert("Game Over! Your final score is" + result)
+}
+}
+
+let countDownTimerId = setInterval(countDown, 1000)
+
+    </script>
+    </main>
+</body>
+</html>
